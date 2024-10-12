@@ -187,7 +187,7 @@ function updateQuizList(category){
                function editQuiz(){
                     localStorage.setItem("editQuiz", JSON.stringify(quizy.indexOf(quiz)));
                     console.log(quizy.indexOf(quiz));
-
+                    window.location.replace("edit-quiz.html");
                }
 
                function exam(){
@@ -240,5 +240,5 @@ updateQuizList(categoryTemp);
 //Usuwanie testow!
 //Edycja testow!
 //katalog z testami podzial na kategorie sortowanie!
-//Rozwiazywanie testow
-//losowanie 1 pytania z testu
+//Rozwiazywanie testow!
+//losowanie 1 pytania z testu!
