@@ -10,17 +10,20 @@ if(localStorage.getItem("exam")){
 
 if(localStorage.getItem("quizy")){
     quizy = JSON.parse(localStorage.getItem("quizy"));
-    time = parseInt(quizy[idQuiz].timeout);
+    time = parseInt(idQuiz.timeout);
 }
 
-document.querySelector("#title-exam").innerHTML = quizy[idQuiz].name;
-document.querySelector("#questions").innerHTML = quizy[idQuiz].questions.length+" quests";
+document.querySelector("#title-exam").innerHTML = idQuiz.name;
+document.querySelector("#questions").innerHTML = idQuiz.questions.length+" quests";
 
 document.querySelector("#randomOneQuest").addEventListener("click", randomOneQuest);
 document.querySelector("#answerQuest").addEventListener("click", Quest);
 
 function randomOneQuest(){
-    let randomQuest = Math.floor(Math.random() * quizy[idQuiz].questions.length);
+    let divC, divD;
+    let randomQuest = Math.floor(Math.random() * idQuiz.questions.length);
+
+    document.querySelector("#answerQuest").removeEventListener("click", Quest);
 
     document.querySelector("#nav-exam").remove();
     document.querySelector("#randomOneQuest").remove();
@@ -35,94 +38,150 @@ function randomOneQuest(){
         
         let question = document.createElement("h2");
             question.classList.add("question");
-            question.innerText = quizy[idQuiz].questions[randomQuest][0];
+            question.innerText = idQuiz.questions[randomQuest][0];
     
-        answerA = document.createElement("p");
+        let divA = document.createElement("div");
+        divA.classList.add("answerDiv");
+        divA.setAttribute("id", "diva");
+        let inputA = document.createElement("input");
+        inputA.setAttribute("type", "checkbox");
+        inputA.setAttribute("id", "aC");
+        inputA.setAttribute("name", "aC");
+        inputA.setAttribute("value", "a");
+        let answerA = document.createElement("p");
             answerA.classList.add("answer");
-            answerA.innerText ="A: "+quizy[idQuiz].questions[randomQuest][1];
+            answerA.setAttribute("id", "a");
+            answerA.innerText ="A: "+idQuiz.questions[randomQuest][1];
     
-        answerB = document.createElement("p");
+        let divB = document.createElement("div");
+        divB.classList.add("answerDiv");
+        divB.setAttribute("id", "divb");
+        let inputB = document.createElement("input");
+        inputB.setAttribute("type", "checkbox");
+        inputB.setAttribute("id", "bC");
+        inputB.setAttribute("name", "bC");
+        inputB.setAttribute("value", "b");
+        let answerB = document.createElement("p");
             answerB.classList.add("answer");
-            answerB.innerText = "B: "+quizy[idQuiz].questions[randomQuest][2];
-    
-        if(quizy[idQuiz].questions[randomQuest][3] != ""){
-            answerC = document.createElement("p");
-            answerC.classList.add("answer");
-            answerC.innerText = "C: "+quizy[idQuiz].questions[randomQuest][3];
-        }
-        if(quizy[idQuiz].questions[randomQuest][4] != ""){
-            answerD = document.createElement("p");
-            answerD.classList.add("answer");
-            answerD.innerText = "D: "+quizy[idQuiz].questions[randomQuest][4];
-        }
-    
-        let correctAnswer = document.createElement("select");
-            correctAnswer.classList.add("answer");
-            correctAnswer.setAttribute("name", "correct");
-            correctAnswer.setAttribute("id", "correct");
-            correctAnswer.setAttribute("placeholder", "Poprawna odpowiedź");
-    
-        optionA = document.createElement("option");
-            optionA.setAttribute("value", "a");
-            optionA.innerText = "a";
-        optionB = document.createElement("option");
-            optionB.setAttribute("value", "b");
-            optionB.innerText = "b";
-        if(quizy[idQuiz].questions[randomQuest][3] != ""){
-            optionC = document.createElement("option");
-            optionC.setAttribute("value", "c");
-            optionC.innerText = "c";
-        }
-        if(quizy[idQuiz].questions[randomQuest][4] != ""){
-            optionD = document.createElement("option");
-            optionD.setAttribute("value", "d");
-            optionD.innerText = "d";
-        }
+            answerB.setAttribute("id", "b");
+            answerB.innerText ="B: "+idQuiz.questions[randomQuest][2];
+
         parent.appendChild(divAddQuestion);
-        divAddQuestion.appendChild(question);
-        divAddQuestion.appendChild(answerA);
-        divAddQuestion.appendChild(answerB);
-        if(quizy[idQuiz].questions[randomQuest][3] != ""){
-            divAddQuestion.appendChild(answerC);
+        divAddQuestion.appendChild(question)
+        divAddQuestion.appendChild(divA);
+        divA.appendChild(inputA);
+        divA.appendChild(answerA);
+        divAddQuestion.appendChild(divB);
+        divB.appendChild(inputB);
+        divB.appendChild(answerB);
+
+        if(idQuiz.questions[randomQuest][3] !== null){
+            divC = document.createElement("div");
+            divC.classList.add("answerDiv");
+            divC.setAttribute("id", "divc");
+            let inputC = document.createElement("input");
+            inputC.setAttribute("type", "checkbox");
+            inputC.setAttribute("id", "cC");
+            inputC.setAttribute("name", "cC");
+            inputC.setAttribute("value", "c");
+            let answerC = document.createElement("p");
+                answerC.classList.add("answer");
+                answerC.setAttribute("id", "c");
+                answerC.innerText ="C: "+idQuiz.questions[randomQuest][3];
+                divAddQuestion.appendChild(divC);
+            divC.appendChild(inputC);
+            divC.appendChild(answerC);
         }
-        if(quizy[idQuiz].questions[randomQuest][4] != ""){
-            divAddQuestion.appendChild(answerD);
+    
+        if(idQuiz.questions[randomQuest][4] !== null){
+            divD = document.createElement("div");
+            divD.classList.add("answerDiv");
+            divD.setAttribute("id", "divd");
+            let inputD = document.createElement("input");
+            inputD.setAttribute("type", "checkbox");
+            inputD.setAttribute("id", "dC");
+            inputD.setAttribute("name", "dC");
+            inputD.setAttribute("value", "d");
+            let answerD = document.createElement("p");
+                answerD.classList.add("answer");
+                answerD.setAttribute("id", "d");
+                answerD.innerText ="D: "+idQuiz.questions[randomQuest][4];
+                divAddQuestion.appendChild(divD);
+            divD.appendChild(inputD);
+            divD.appendChild(answerD);
         }
-        divAddQuestion.appendChild(correctAnswer);
-        correctAnswer.appendChild(optionA);
-        correctAnswer.appendChild(optionB);
-        if(quizy[idQuiz].questions[randomQuest][3] != ""){
-            correctAnswer.appendChild(optionC);
-        }
-        if(quizy[idQuiz].questions[randomQuest][4] != ""){
-            correctAnswer.appendChild(optionD);
-        }
+
         function checkAnswer(){
-            let corrects;
-            document.querySelector(".add-question").remove();
-            document.querySelector("#add-quiz-container").remove();
-            if(correctAnswer.value == quizy[idQuiz].questions[randomQuest][5]){
-                corrects = 1;
+            let corrects = 0, goResult = true;
+            if((document.querySelector("#aC") !== null && document.querySelector("#aC").checked) || (document.querySelector("#bC") !== null && document.querySelector("#bC").checked) || (document.querySelector("#cC") !== null && document.querySelector("#cC").checked) || (document.querySelector("#dC") !== null && document.querySelector("#dC").checked)){
+                if(document.querySelector("#aC").value == idQuiz.questions[randomQuest][5][0]){
+                    corrects++;
+                }else if(document.querySelector("#aC").checked){
+                    corrects = -100;
+                }
+                if(document.querySelector("#bC").value == idQuiz.questions[randomQuest][5][1]){
+                    corrects++;
+                }else if(document.querySelector("#bC").checked){
+                    corrects = -100;
+                }
+                if(idQuiz.questions[randomQuest][5][2] !== null){
+                    if(document.querySelector("#cC").value == idQuiz.questions[randomQuest][5][2]){
+                        corrects++;
+                    }else if(document.querySelector("#cC").checked){
+                        corrects = -100;
+                    }
+                }
+                if(idQuiz.questions[randomQuest][5][3] !== null){
+                    if(document.querySelector("#dC").value == idQuiz.questions[randomQuest][5][3]){
+                        corrects++;
+                    }else if(document.querySelector("#dC").checked){
+                        corrects = -100;
+                    }
+                }
+            }else{
+                alert("Zaznacz prawidłowe odpowiedzi!");
+                goResult = false;
             }
 
-            if(corrects > 0){
-                let i = document.createElement("i");
-                    i.classList.add("great");
-                    i.classList.add("fa-solid");
-                    i.classList.add("fa-check");
-                
-                let p = document.createElement("p");
-                    p.innerText = "Odpowiedz poprawna";
-                    document.querySelector("#add-container").appendChild(i);
-                    document.querySelector("#add-container").appendChild(p);
+            if(goResult){
+                result();
+            }
+
+            function result(){
+                document.querySelector(".add-question").remove();
+                document.querySelector("#add-quiz-container").remove();
+    
+                if(corrects > 0){
+                    let i = document.createElement("i");
+                        i.classList.add("great");
+                        i.classList.add("fa-solid");
+                        i.classList.add("fa-check");
+                    
+                    let p = document.createElement("p");
+                        p.innerText = "Odpowiedz poprawna.";
+                        document.querySelector("#add-container").appendChild(i);
+                        document.querySelector("#add-container").appendChild(p);
+                }else{
+                    let i = document.createElement("i");
+                        i.classList.add("bad");
+                        i.classList.add("fa-solid");
+                        i.classList.add("fa-x");
+                    
+                    let p = document.createElement("p");
+                        p.innerText = "Odpowiedz nie poprawna.";
+                        document.querySelector("#add-container").appendChild(i);
+                        document.querySelector("#add-container").appendChild(p);
+                }
             }
         }
     }
 
 function Quest(){
+    document.querySelector("#answerQuest").removeEventListener("click", Quest);
     let answers = Array();
-
-    timerLet = setInterval(timer, 1000);
+    if(time != 0){
+        timerLet = setInterval(timer, 1000);
+    }
     document.querySelector("#nav-exam").remove();
     document.querySelector("#randomOneQuest").remove();
     let checkQuest = document.querySelector("#answerQuest");
@@ -133,105 +192,162 @@ function Quest(){
 
     let divTimer = document.createElement("div");
     let pTimer = document.createElement("p");
-    pTimer.innerText = time;
+    if(time == 0){
+        pTimer.innerText = "Brak ograniczenia czasowego.";
+    }else{
+        pTimer.innerText = time;
+    }
+    
 
     parent.appendChild(divTimer);
     divTimer.appendChild(pTimer);
 
     let lQuests = 1;
 
-    quizy[idQuiz].questions.forEach(quest => {
+    idQuiz.questions.forEach(quest => {
         let parent = document.querySelector("#add-container");
     
         let divAddQuestion = document.createElement("div");
             divAddQuestion.classList.add("add-question");
-        
-        let question = document.createElement("h2");
-            question.classList.add("question");
-            question.innerText = "#"+lQuests+": "+quest[0];
-    
-        answerA = document.createElement("p");
-            answerA.classList.add("answer");
-            answerA.innerText ="A: "+quest[1];
-    
-        answerB = document.createElement("p");
-            answerB.classList.add("answer");
-            answerB.innerText = "B: "+quest[2];
-    
-        if(quest[3] != ""){
-            answerC = document.createElement("p");
+
+    let question = document.createElement("h2");
+        question.classList.add("question");
+        question.innerText = "#"+lQuests+": "+quest[0];
+
+    let divA = document.createElement("div");
+    divA.classList.add("answerDiv");
+    divA.setAttribute("id", "diva");
+    let inputA = document.createElement("input");
+    inputA.setAttribute("type", "checkbox");
+    inputA.setAttribute("id", "aC");
+    inputA.setAttribute("name", "aC");
+    inputA.setAttribute("value", "a");
+    let answerA = document.createElement("p");
+        answerA.classList.add("answer");
+        answerA.setAttribute("id", "a");
+        answerA.innerText ="A: "+quest[1];
+
+    let divB = document.createElement("div");
+    divB.classList.add("answerDiv");
+    divB.setAttribute("id", "divb");
+    let inputB = document.createElement("input");
+    inputB.setAttribute("type", "checkbox");
+    inputB.setAttribute("id", "bC");
+    inputB.setAttribute("name", "bC");
+    inputB.setAttribute("value", "b");
+    let answerB = document.createElement("p");
+        answerB.classList.add("answer");
+        answerB.setAttribute("id", "b");
+        answerB.innerText ="B: "+quest[2];
+
+    parent.appendChild(divAddQuestion);
+    divAddQuestion.appendChild(question)
+    divAddQuestion.appendChild(divA);
+    divA.appendChild(inputA);
+    divA.appendChild(answerA);
+    divAddQuestion.appendChild(divB);
+    divB.appendChild(inputB);
+    divB.appendChild(answerB);
+
+    if(quest[3] !== null){
+        divC = document.createElement("div");
+        divC.classList.add("answerDiv");
+        divC.setAttribute("id", "divc");
+        let inputC = document.createElement("input");
+        inputC.setAttribute("type", "checkbox");
+        inputC.setAttribute("id", "cC");
+        inputC.setAttribute("name", "cC");
+        inputC.setAttribute("value", "c");
+        let answerC = document.createElement("p");
             answerC.classList.add("answer");
-            answerC.innerText = "C: "+quest[3];
-        }
-        if(quest[4] != ""){
-            answerD = document.createElement("p");
+            answerC.setAttribute("id", "c");
+            answerC.innerText ="C: "+quest[3];
+            divAddQuestion.appendChild(divC);
+        divC.appendChild(inputC);
+        divC.appendChild(answerC);
+    }
+
+    if(quest[4] !== null){
+        divD = document.createElement("div");
+        divD.classList.add("answerDiv");
+        divD.setAttribute("id", "divd");
+        let inputD = document.createElement("input");
+        inputD.setAttribute("type", "checkbox");
+        inputD.setAttribute("id", "dC");
+        inputD.setAttribute("name", "dC");
+        inputD.setAttribute("value", "d");
+        let answerD = document.createElement("p");
             answerD.classList.add("answer");
-            answerD.innerText = "D: "+quest[4];
-        }
-    
-        let correctAnswer = document.createElement("select");
-            correctAnswer.classList.add("answer");
-            correctAnswer.setAttribute("name", "correct");
-            correctAnswer.setAttribute("id", "correct");
-            correctAnswer.setAttribute("placeholder", "Poprawna odpowiedź");
-            answers.push(correctAnswer);
-    
-        optionA = document.createElement("option");
-            optionA.setAttribute("value", "a");
-            optionA.innerText = "a";
-        optionB = document.createElement("option");
-            optionB.setAttribute("value", "b");
-            optionB.innerText = "b";
-        if(quest[3] != ""){
-            optionC = document.createElement("option");
-            optionC.setAttribute("value", "c");
-            optionC.innerText = "c";
-        }
-        if(quest[4] != ""){
-            optionD = document.createElement("option");
-            optionD.setAttribute("value", "d");
-            optionD.innerText = "d";
-        }
-        parent.appendChild(divAddQuestion);
-        divAddQuestion.appendChild(question);
-        divAddQuestion.appendChild(answerA);
-        divAddQuestion.appendChild(answerB);
-        if(quest[3] != ""){
-            divAddQuestion.appendChild(answerC);
-        }
-        if(quest[4] != ""){
-            divAddQuestion.appendChild(answerD);
-        }
-        divAddQuestion.appendChild(correctAnswer);
-        correctAnswer.appendChild(optionA);
-        correctAnswer.appendChild(optionB);
-        if(quest[3] != ""){
-            correctAnswer.appendChild(optionC);
-        }
-        if(quest[4] != ""){
-            correctAnswer.appendChild(optionD);
-        }
+            answerD.setAttribute("id", "d");
+            answerD.innerText ="D: "+quest[4];
+            divAddQuestion.appendChild(divD);
+        divD.appendChild(inputD);
+        divD.appendChild(answerD);
+    }
+    answers.push(divAddQuestion);
         lQuests++;
     });
 
     function checkAnswer(){
-        clearInterval(timerLet);
-        let corrects = 0;
-        document.querySelector("#add-container").remove();
-        document.querySelector("#add-quiz-container").remove();
-
-        let lTemp = 0;
-        quizy[idQuiz].questions.forEach(quest => {
-            if(quest[5] == answers[lTemp].value){
-                corrects++;
+        let corrects = 0, lTemp = 0, goResult = true;
+        idQuiz.questions.forEach(quest => {
+            if((answers[lTemp].children.diva.children.aC.checked) || (answers[lTemp].children.divb.children.bC.checked) || (answers[lTemp].children.divc.children.cC.checked) || (answers[lTemp].children.divd.children.dC.checked)){
+                if(answers[lTemp].children.diva.children.aC.value == quest[5][0] && answers[lTemp].children.diva.children.aC.checked){
+                    corrects++;
+                }else if(answers[lTemp].children.diva.children.aC.checked){
+                    corrects--;
+                }
+                if(answers[lTemp].children.divb.children.bC.value == quest[5][1] && answers[lTemp].children.divb.children.bC.checked){
+                    corrects++;
+                }else if(answers[lTemp].children.divb.children.bC.checked){
+                    corrects--;
+                }
+                if(quest[5][2] !== null){
+                    if(answers[lTemp].children.divc.children.cC.value == quest[5][2] && answers[lTemp].children.divc.children.cC.checked){
+                        corrects++;
+                    }else if(answers[lTemp].children.divc.children.cC.checked){
+                        corrects--;
+                    }
+                }
+                if(quest[5][3] !== null){
+                    if(answers[lTemp].children.divd.children.dC.value == quest[5][3] && answers[lTemp].children.divd.children.dC.checked){
+                        corrects++;
+                    }else if(answers[lTemp].children.divd.children.dC.checked){
+                        corrects--;
+                    }
+                }
+            }else{
+                alert("Zaznacz prawidłowe odpowiedzi!");
+                goResult = false;
             }
             lTemp++;
         });
-        
-        let end = document.createElement("p");
-            end.innerText = "Czas: "+parseInt(quizy[idQuiz].timeout - time)+"s odpowiedzi: "+corrects+"/"+quizy[idQuiz].questions.length;
-            
+
+        if(goResult){
+            result();
+        }
+
+        function result(){
+            let end = document.createElement("p");
+            let odp = 0;
+            idQuiz.questions.forEach(questt => {
+                for (let index = 0; index < 3; index++) {
+                    if(questt[5][index] !== null){
+                        odp++;
+                    } 
+                }
+            })
+            if(idQuiz.timeout != 0){
+                end.innerText = "Czas: "+parseInt(idQuiz.timeout - time)+"s odpowiedzi: "+corrects+"/"+odp;
+            }else{
+                end.innerText = "Odpowiedzi: "+corrects+"/"+odp;
+            }
+    
+            clearInterval(timerLet);
+            document.querySelector("#add-container").remove();
+            document.querySelector("#add-quiz-container").remove();
             document.querySelector("#buttons").appendChild(end);
+        }
     }
 
     function timer(){

@@ -2,17 +2,33 @@ localStorage.removeItem("editQuiz");
 
 //Zmienne
 let quizy = new Array();
-let categories = new Array();
+let categories = [
+     "Filmy",
+     "Geografia",
+     "Historia",
+     "Jedzenie",
+     "J.angielski",
+     "J.polski",
+     "Kultura",
+     "Literatura",
+     "Medycyna",
+     "Muzyka",
+     "Nauka",
+     "Polityka",
+     "Przyroda",
+     "Psychologia",
+     "Sport",
+     "Technologia",
+     "Zabawne",
+     "Zagadki",
+     "Zwierzęta"
+ ];
 let categoryTemp = "Wszystkie";
 let orderQuizTemp = true;
 
 if(localStorage.getItem("quizy")){
     quizy = JSON.parse(localStorage.getItem("quizy"));
 }
-if(localStorage.getItem("categories")){
-     categories = JSON.parse(localStorage.getItem("categories"));
- 
- }
 
 //funkcje
 
@@ -185,13 +201,12 @@ function updateQuizList(category){
                }
 
                function editQuiz(){
-                    localStorage.setItem("editQuiz", JSON.stringify(quizy.indexOf(quiz)));
-                    console.log(quizy.indexOf(quiz));
+                    localStorage.setItem("editQuiz", JSON.stringify(quiz));
                     window.location.replace("edit-quiz.html");
                }
 
                function exam(){
-                    localStorage.setItem("exam", JSON.stringify(quizy.indexOf(quiz)));
+                    localStorage.setItem("exam", JSON.stringify(quiz));
                     window.location.replace("exam.html");
                }
           });

@@ -272,3 +272,29 @@ footer{
     font-size: 40px;
     color: whitesmoke;
 }
+
+.bad{
+    margin-top: 150px;
+    background-color: #e82323;
+    padding: 30px;
+    border-radius: 50%;
+    font-size: 40px;
+    color: whitesmoke;
+}
+
+.inputDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 60%;
+}
+
+.inputDiv textarea{
+    width: 90%;
+}
+
+.answerDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
