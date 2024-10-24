@@ -270,12 +270,12 @@ function addQuiz(){
                     }else{
                         questTemp[i][5][1] = null;
                     }
-                    if(element.children.divc.children.cC.checked){
+                    if(element.children.divc.children.cC.checked && questTemp[i][3] !== null){
                         questTemp[i][5][2] = (element.children.divc.children.cC.value);
                     }else{
                         questTemp[i][5][2] = null;
                     }
-                    if(element.children.divd.children.dC.checked){
+                    if(element.children.divd.children.dC.checked && questTemp[i][4] !== null){
                         questTemp[i][5][3] = (element.children.divd.children.dC.value);
                     }else{
                         questTemp[i][5][3] = null;
