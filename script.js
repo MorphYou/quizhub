@@ -89,7 +89,7 @@ function updateQuizList(category){
           }
           
 
-          quizy.forEach(quiz => {
+          quizyTemp.forEach(quiz => {
                let divQuiz = document.createElement("div");
                divQuiz.classList.add("quiz");
 
